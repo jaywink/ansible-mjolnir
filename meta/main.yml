@@ -1,0 +1,21 @@
+galaxy_info:
+  author: Jason Robinson
+  description: Deploy a Mjolnir using Docker.
+
+  issue_tracker_url: https://github.com/jaywink/ansible-mjolnir/issues
+
+  license: BSD-3-Clause
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Ubuntu
+      versions:
+      - focal
+
+  galaxy_tags:
+    - mjolnir
+    - matrix
+    - moderation
+
+dependencies: []

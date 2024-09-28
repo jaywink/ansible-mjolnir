@@ -1,0 +1,34 @@
+---
+# Required, no defaults
+# If pantalaimon is enabled, access token becomes not required
+#mjolnir_access_token: matrixusertokenhere
+# Homeserver url or pantalaimon
+#mjolnir_homeserver_url: https://matrix.domain.tld
+# Homeserver url
+#mjolnir_raw_homeserver_url: https://matrix.domain.tld
+#mjolnir_management_room: #alias:domain.tld or !roomid:domain.tld
+#mjolnir_user: "@user:domain.tld"
+# Localpart
+# TODO figure out automatically from user
+#mjolnir_username: "user"
+
+# Optional
+mjolnir_name: mjolnir
+mjolnir_container_name: "{{ mjolnir_name }}"
+mjolnir_container_labels: {}
+mjolnir_docker_image: matrixdotorg/mjolnir:v1.7.0
+mjolnir_docker_networks: []
+mjolnir_docker_restart_policy: unless-stopped
+# If set to true, mjolnir_password is required and mjolnir_access_token will be ignored
+mjolnir_pantalaimon: false
+mjolnir_autojoin_only_if_manager: true
+mjolnir_verify_permissions_on_startup: true
+# Web endpoints
+# If you enable this you need to route POST /_matrix/client/(r0/v1/v3)/rooms/{roomId}/report/{eventId}
+# to Mjolnir
+mjolnir_web_abuse_reporting: false
+# Synapse reports polling
+mjolnir_poll_reports: false
+
+# Unset, not required
+#mjolnir_pantalaimon_password: setifpantalaimonenabled

@@ -1,0 +1,41 @@
+---
+- name: Ensure user
+  user:
+    name: "{{ mjolnir_name }}"
+  register: _user
+
+- name: Ensure mjolnir paths
+  file:
+    path: "/data/{{ mjolnir_name }}/config"
+    state: directory
+    mode: 0700
+    owner: "{{ mjolnir_name }}"
+    group: "{{ mjolnir_name }}"
+
+- name: Template config
+  template:
+    src: mjolnir.yaml
+    dest: "/data/{{ mjolnir_name }}/config/production.yaml"
+    mode: 0600
+    owner: "{{ mjolnir_name }}"
+    group: "{{ mjolnir_name }}"
+  register: _config
+
+- name: Mjolnir container
+  docker_container:
+    state: started
+    name: "{{ mjolnir_container_name }}"
+    image: "{{ mjolnir_docker_image }}"
+    restart_policy: "{{ mjolnir_docker_restart_policy }}"
+    restart: "{{ _config.changed }}"
+    volumes:
+      - "/data/{{ mjolnir_name }}:/data"
+    log_driver: json-file
+    log_options:
+      max-size: "100m"
+    user: "{{ _user.uid }}"
+    labels: "{{ mjolnir_container_labels }}"
+    networks: "{{ mjolnir_docker_networks }}"
+    ports:
+      - "8080"
+
